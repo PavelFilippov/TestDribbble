@@ -21,8 +21,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private static final String TAG = "BaseActivity";
 
-    private MaterialDialog dialog;
-
     private NetworkConnectivityAware_ receiver;
 
     @Override

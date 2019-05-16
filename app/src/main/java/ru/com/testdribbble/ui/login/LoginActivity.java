@@ -10,7 +10,7 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.design.button.MaterialButton;
-import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
 import android.webkit.WebResourceRequest;
@@ -31,6 +31,7 @@ import javax.inject.Inject;
 
 import ru.com.testdribbble.R;
 import ru.com.testdribbble.TheApplication;
+import ru.com.testdribbble.core.LocalUserProvider;
 import ru.com.testdribbble.core.utils.Constants;
 import ru.com.testdribbble.core.utils.EncodeUtils;
 import ru.com.testdribbble.mvp.login.LoginActivityContract;
@@ -72,6 +73,9 @@ public class LoginActivity extends BaseActivity implements LoginActivityContract
     @App
     TheApplication application;
 
+    @Bean
+    LocalUserProvider userProvider;
+
 //Set Local variables
 
     private MaterialDialog loginDialog;
@@ -89,8 +93,12 @@ public class LoginActivity extends BaseActivity implements LoginActivityContract
     public void afterViews() {
         presenter.setRouter(router);
         presenter.setView(this);
-        showLoginDialog();
-        setLoginScreen();
+        if(!TextUtils.isEmpty(userProvider.getToken())) {
+            presenter.goToNextScreen();
+        } else {
+            showLoginDialog();
+            setLoginScreen();
+        }
     }
 
     @Override

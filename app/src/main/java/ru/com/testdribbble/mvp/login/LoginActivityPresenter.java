@@ -9,6 +9,7 @@ import org.androidannotations.annotations.EBean;
 import ru.com.testdribbble.core.data.DataProvider;
 import ru.com.testdribbble.core.utils.Constants;
 import ru.com.testdribbble.core.utils.EncodeUtils;
+import ru.com.testdribbble.ui.Screens;
 import ru.terrakok.cicerone.Router;
 
 @EBean
@@ -48,7 +49,7 @@ public class LoginActivityPresenter implements LoginActivityContract.LoginActivi
 
     @Override
     public void goToNextScreen() {
-
+        router.newRootScreen(new Screens.MainScreen());
     }
 
     @Override
