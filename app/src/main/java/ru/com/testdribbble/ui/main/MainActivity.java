@@ -1,4 +1,4 @@
-package ru.com.testdribbble.ui;
+package ru.com.testdribbble.ui.main;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

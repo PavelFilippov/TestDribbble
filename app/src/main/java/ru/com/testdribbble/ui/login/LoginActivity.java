@@ -1,4 +1,4 @@
-package ru.com.testdribbble.ui;
+package ru.com.testdribbble.ui.login;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -35,13 +35,14 @@ import ru.com.testdribbble.core.utils.Constants;
 import ru.com.testdribbble.core.utils.EncodeUtils;
 import ru.com.testdribbble.mvp.login.LoginActivityContract;
 import ru.com.testdribbble.mvp.login.LoginActivityPresenter;
+import ru.com.testdribbble.ui.BaseActivity;
 import ru.terrakok.cicerone.Navigator;
 import ru.terrakok.cicerone.NavigatorHolder;
 import ru.terrakok.cicerone.Router;
 import ru.terrakok.cicerone.android.support.SupportAppNavigator;
 
 @EActivity(R.layout.activity_login)
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity implements LoginActivityContract.LoginActivityView {
 
     private static final String TAG = "LoginActivity";
 
@@ -87,6 +88,7 @@ public class LoginActivity extends AppCompatActivity {
     @AfterViews
     public void afterViews() {
         presenter.setRouter(router);
+        presenter.setView(this);
         showLoginDialog();
         setLoginScreen();
     }
@@ -145,6 +147,23 @@ public class LoginActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void showLoading() {
+        if(webView != null) webView.setVisibility(View.GONE);
+        if(progressBar != null) progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideLoading() {
+        if(webView != null) webView.setVisibility(View.VISIBLE);
+        if(progressBar != null) progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showErrorOnGetToken(Throwable throwable) {
+        showError(throwable);
     }
 
     private class MyWebViewClient extends WebViewClient {

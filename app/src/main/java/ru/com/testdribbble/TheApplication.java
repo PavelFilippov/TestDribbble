@@ -4,17 +4,26 @@ import android.support.multidex.MultiDexApplication;
 
 import org.androidannotations.annotations.EApplication;
 
+import lombok.Getter;
+import lombok.Setter;
 import ru.com.testdribbble.core.dagger.AppComponent;
 import ru.com.testdribbble.core.dagger.DaggerAppComponent;
 
 @EApplication
 public class TheApplication extends MultiDexApplication {
 
+    public static TheApplication INSTANCE;
+
     private AppComponent appComponent;
+
+    @Getter
+    @Setter
+    private boolean hasNetworkConnection = true;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        INSTANCE = this;
     }
 
     public AppComponent getAppComponent() {

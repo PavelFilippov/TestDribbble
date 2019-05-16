@@ -5,8 +5,8 @@ import javax.inject.Singleton;
 import dagger.Component;
 import ru.com.testdribbble.core.dagger.module.LocalNavigationModule;
 import ru.com.testdribbble.core.dagger.module.NavigationModule;
-import ru.com.testdribbble.ui.LoginActivity;
-import ru.com.testdribbble.ui.MainActivity;
+import ru.com.testdribbble.ui.login.LoginActivity;
+import ru.com.testdribbble.ui.main.MainActivity;
 
 @Singleton
 @Component(modules = {

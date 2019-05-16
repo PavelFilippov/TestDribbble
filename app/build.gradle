@@ -38,6 +38,7 @@ ext {
     androidAnnotationsVersion = "4.5.2"
     materialDialogVersion = "0.9.6.0"
     picassoVersion = "2.71828"
+    eventBusVersion = "3.1.1"
 }
 
 dependencies {
@@ -84,5 +85,13 @@ dependencies {
 
     //Picasso
     implementation "com.squareup.picasso:picasso:$picassoVersion"
+
+    // EventBus
+    implementation "org.greenrobot:eventbus:$eventBusVersion"
+
+    //Croutone
+    implementation('de.keyboardsurfer.android.widget:crouton:1.8.5@aar') {
+        exclude group: 'com.google.android', module: 'support-v4'
+    }
 
 }

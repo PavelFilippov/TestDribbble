@@ -23,4 +23,8 @@ public class Constants {
 
     public static final String REDIRECT_URL = "https://example.com/?code=";
 
+    public static final String TOKEN_URL = "https://dribbble.com/oauth/";
+
+    public static final String API_URL = "https://api.dribbble.com/v2/";
+
 }

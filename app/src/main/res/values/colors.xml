@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">#444444</color>
     <color name="colorAccent">#c32361</color>
@@ -8,4 +9,6 @@
     <color name="colorRoseLightClicked">#43EA4C89</color>
     <color name="colorGreyLight">#E6F0F2</color>
     <color name="colorTransparent">#00ffffff</color>
+    <color name="colorDeepSkyBlue">#00ACFF</color>
+
 </resources>

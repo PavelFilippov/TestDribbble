@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Test Dribbble</string>
 
+    <string name="error">Error</string>
+    <string name="server_error">Server Error</string>
+    <string name="network_connection_established">Network connection established</string>
+    <string name="network_connection_lost">Network connection lost</string>
+
     <!-- Login Screen -->
     <string name="if_you_dont_have_account_on_dribbble_please_sign_up_there">If you don\'t have account on dribbble.com please Sign up there</string>
     <string name="sign_up">Sign up</string>
