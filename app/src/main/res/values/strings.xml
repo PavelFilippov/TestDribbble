@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Test Dribbble</string>
+
+    <!-- Login Screen -->
+    <string name="if_you_dont_have_account_on_dribbble_please_sign_up_there">If you don\'t have account on dribbble.com please Sign up there</string>
+    <string name="sign_up">Sign up</string>
+    <string name="sign_in">Sign in</string>
+
+</resources>

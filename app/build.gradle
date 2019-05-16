@@ -1,0 +1,88 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "ru.com.testdribbble"
+        minSdkVersion 17
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+ext {
+    supportLibraryVersion = "28.0.0"
+    supportMutliDexLibraryVersion = "1.0.3"
+    supportDesignVersion = "1.0.0"
+    constraintLayoutVersion = "1.1.3"
+    ciceroneVersion = "4.0.2"
+    rxJavaVersion = "2.1.6"
+    rxAndroidVersion = "2.0.1"
+    daggerVersion = "2.14.1"
+    retrofit2Version = "2.4.0"
+    okhttp3Version = "3.11.0"
+    gsonVersion = "2.8.5"
+    lombokVersion = "1.16.20"
+    androidAnnotationsVersion = "4.5.2"
+    materialDialogVersion = "0.9.6.0"
+    picassoVersion = "2.71828"
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "com.android.support:multidex:$supportMutliDexLibraryVersion"
+
+    //noinspection GradleCompatible
+    implementation "com.android.support:recyclerview-v7:$supportLibraryVersion"
+    implementation "com.android.support:support-v4:$supportLibraryVersion"
+    implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
+    implementation "com.android.support:design:$supportLibraryVersion"
+    implementation "com.android.support.constraint:constraint-layout:$constraintLayoutVersion"
+
+    //Cicerone
+    implementation "ru.terrakok.cicerone:cicerone:$ciceroneVersion"
+
+    // RxJava and RxAndroid
+    implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
+
+    //Dagger2
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$daggerVersion"
+
+    //Retrofit 2
+    implementation "com.squareup.retrofit2:retrofit:$retrofit2Version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit2Version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit2Version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3Version"
+
+    //Gson
+    implementation "com.google.code.gson:gson:$gsonVersion"
+
+    // Lombok
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
+    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+
+    //AndroidAnnotations
+    annotationProcessor "org.androidannotations:androidannotations:$androidAnnotationsVersion"
+    implementation "org.androidannotations:androidannotations-api:$androidAnnotationsVersion"
+
+    //Material Dialogs
+    implementation "com.afollestad.material-dialogs:core:$materialDialogVersion"
+
+    //Picasso
+    implementation "com.squareup.picasso:picasso:$picassoVersion"
+
+}
