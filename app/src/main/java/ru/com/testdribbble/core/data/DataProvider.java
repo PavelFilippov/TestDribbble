@@ -18,6 +18,7 @@ import ru.com.testdribbble.TheApplication;
 import ru.com.testdribbble.core.LocalUserProvider;
 import ru.com.testdribbble.core.data.model.Shot;
 import ru.com.testdribbble.core.data.model.Token;
+import ru.com.testdribbble.core.data.model.User;
 import ru.com.testdribbble.core.exception.NoNetworkException;
 import ru.com.testdribbble.core.http.NetworkModule;
 import ru.com.testdribbble.core.utils.NetworkUtils;
@@ -46,6 +47,13 @@ public class DataProvider {
                         pref.edit().token().put(tokenResponse.getAccessToken()).apply();
                     }
                 }).compose(RxUtils.applySchedulers())
+                .subscribe(onComplete, onError);
+    }
+
+    public Disposable getUser(Consumer<User> onComplete, Consumer<Throwable> onError) {
+        if (!hasNetwork()) return createNoNetworkSubscription(onComplete, onError);
+        return networkModule.getMainApi().getUser()
+                .compose(RxUtils.applySchedulers())
                 .subscribe(onComplete, onError);
     }
 

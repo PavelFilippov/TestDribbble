@@ -7,6 +7,7 @@ import ru.com.testdribbble.core.dagger.module.LocalNavigationModule;
 import ru.com.testdribbble.core.dagger.module.NavigationModule;
 import ru.com.testdribbble.ui.login.LoginActivity;
 import ru.com.testdribbble.ui.main.MainActivity;
+import ru.com.testdribbble.ui.main.ProfileFragment;
 import ru.com.testdribbble.ui.main.shots.ShotsFragment;
 
 @Singleton
@@ -28,4 +29,8 @@ public interface AppComponent {
     //----------------------------------------ShotsScreen--------------------------------------------
 
     void inject(ShotsFragment fragment);
+
+    //----------------------------------------ProfileScreen--------------------------------------------
+
+    void inject(ProfileFragment fragment);
 }

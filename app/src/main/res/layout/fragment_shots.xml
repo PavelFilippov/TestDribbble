@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent">
 
-        <include layout="@layout/view_header_left_log_out"/>
+        <include layout="@layout/view_header_left_button"/>
 
     </android.support.design.widget.AppBarLayout>
 

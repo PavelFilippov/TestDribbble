@@ -2,7 +2,10 @@ package ru.com.testdribbble.ui.login;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -12,6 +15,7 @@ import android.support.annotation.Nullable;
 import android.support.design.button.MaterialButton;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
@@ -26,6 +30,8 @@ import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -93,7 +99,8 @@ public class LoginActivity extends BaseActivity implements LoginActivityContract
     public void afterViews() {
         presenter.setRouter(router);
         presenter.setView(this);
-        if(!TextUtils.isEmpty(userProvider.getToken())) {
+        String token = userProvider.getToken();
+        if(!TextUtils.isEmpty(token)) {
             presenter.goToNextScreen();
         } else {
             showLoginDialog();
@@ -125,17 +132,17 @@ public class LoginActivity extends BaseActivity implements LoginActivityContract
                 .customView(R.layout.dialog_question_yes_no, false)
                 .build();
         TextView txtQuestion = (TextView) loginDialog.findViewById(R.id.txtQuestion);
-        MaterialButton btnCancel = (MaterialButton) loginDialog.findViewById(R.id.btnNo);
-        MaterialButton btnAccept = (MaterialButton) loginDialog.findViewById(R.id.btnYes);
+        MaterialButton btnSignIn = (MaterialButton) loginDialog.findViewById(R.id.btnNo);
+        MaterialButton btnSignUp = (MaterialButton) loginDialog.findViewById(R.id.btnYes);
 
         txtQuestion.setText(getString(R.string.if_you_dont_have_account_on_dribbble_please_sign_up_there));
-        btnCancel.setText(getString(R.string.sign_in));
-        btnAccept.setText(getString(R.string.sign_up));
+        btnSignIn.setText(getString(R.string.sign_in));
+        btnSignUp.setText(getString(R.string.sign_up));
 
         loginDialog.show();
 
-        btnCancel.setOnClickListener(v -> loginDialog.dismiss());
-        btnAccept.setOnClickListener(v -> {
+        btnSignIn.setOnClickListener(v -> loginDialog.dismiss());
+        btnSignUp.setOnClickListener(v -> {
             if (SystemClock.elapsedRealtime() - mLastClickTime < 1000) {
                 return;
             }

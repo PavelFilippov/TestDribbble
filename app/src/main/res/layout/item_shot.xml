@@ -6,7 +6,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/rounded_corners_grey_border_white_fill"
     android:layout_margin="2dp">
 
     <com.facebook.drawee.view.SimpleDraweeView
@@ -17,6 +16,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        fresco:roundedCornerRadius="5dp"
+        fresco:roundingBorderColor="@color/colorPrimaryDark"
+        fresco:roundingBorderWidth="2dp"
+        fresco:roundTopLeft="true"
+        fresco:roundTopRight="true"
+        fresco:roundBottomLeft="true"
+        fresco:roundBottomRight="true"
         fresco:placeholderImage="@drawable/rounded_corners_empty_image"
         fresco:progressBarImageScaleType="centerInside"
         fresco:actualImageScaleType="centerInside"

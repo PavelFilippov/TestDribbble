@@ -8,6 +8,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 import ru.com.testdribbble.core.data.model.Shot;
 import ru.com.testdribbble.core.data.model.Token;
+import ru.com.testdribbble.core.data.model.User;
 
 public interface Api {
 
@@ -16,7 +17,11 @@ public interface Api {
                                @Query("client_secret") String clientSecret,
                                @Query("code") String code);
 
+    @GET("user")
+    Observable<User> getUser();
+
     @GET("user/shots")
     Observable<List<Shot>> getShots(@Query("page") int page,
                                     @Query("per_page") int per_page);
+
 }

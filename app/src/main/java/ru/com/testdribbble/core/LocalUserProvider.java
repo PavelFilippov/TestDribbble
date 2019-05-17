@@ -34,4 +34,8 @@ public class LocalUserProvider {
         }
     }
 
+    public void removeToken() {
+        preferences.edit().token().put(null).apply();
+    }
+
 }

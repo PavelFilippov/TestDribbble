@@ -1,4 +1,4 @@
-package ru.com.testdribbble.mvp.main;
+package ru.com.testdribbble.mvp.main.profile;
 
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
@@ -7,28 +7,27 @@ import ru.com.testdribbble.core.data.DataProvider;
 import ru.terrakok.cicerone.Router;
 
 @EBean
-public class ShotsFragmentPresenter implements ShotsFragmentContract.ShotsFragmentPresenter {
+public class ProfileFragmentPresenter implements ProfileFragmentContract.ProfileFragmentPresenter {
 
-    private static final String TAG = "ShotsFragmentPresenter";
-    private static final int PER_PAGE = 5;
+    private static final String TAG = "ProfileFragmentPresenter";
 
-    private ShotsFragmentContract.ShotsFragmentView view;
+    private ProfileFragmentContract.ProfileFragmentView view;
     private Router router;
 
     @Bean
     DataProvider dataProvider;
 
     @Override
-    public void setView(ShotsFragmentContract.ShotsFragmentView view) {
+    public void setView(ProfileFragmentContract.ProfileFragmentView view) {
         this.view = view;
     }
 
     @Override
-    public void loadShots(int page) {
+    public void loadProfileInfo() {
         view.showLoading();
-        dataProvider.getShots(page, PER_PAGE, shots -> {
+        dataProvider.getUser(user -> {
             view.hideLoading();
-            view.setShots(shots);
+            view.setProfileInfo(user);
         }, throwable -> {
             view.hideLoading();
             view.showError(throwable);

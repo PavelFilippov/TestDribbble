@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 
 import ru.com.testdribbble.ui.login.LoginActivity_;
 import ru.com.testdribbble.ui.main.MainActivity_;
+import ru.com.testdribbble.ui.main.ProfileFragment_;
 import ru.com.testdribbble.ui.main.shots.ShotsFragment_;
 import ru.terrakok.cicerone.android.support.SupportAppScreen;
 
@@ -43,6 +44,22 @@ public class Screens {
         @Override
         public Fragment getFragment() {
             return Fragment.instantiate(context, ShotsFragment_.class.getName());
+        }
+    }
+//-----------------------------Profile screen---------------------------------
+
+    public static final class ProfileScreen extends SupportAppScreen {
+        private Context context;
+
+        @Override
+        public Intent getActivityIntent(Context context) {
+            this.context = context;
+            return super.getActivityIntent(context);
+        }
+
+        @Override
+        public Fragment getFragment() {
+            return Fragment.instantiate(context, ProfileFragment_.class.getName());
         }
     }
 

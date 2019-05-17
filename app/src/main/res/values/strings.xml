@@ -11,4 +11,13 @@
     <string name="sign_up">Sign up</string>
     <string name="sign_in">Sign in</string>
 
+    <!-- Shots Screen -->
+    <string name="are_you_sure_you_want_to_log_out">Are you sure you want to Log out?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <!-- Profile Screen -->
+    <string name="profile">Profile</string>
+    <string name="_followers">%d followers</string>
+
 </resources>
