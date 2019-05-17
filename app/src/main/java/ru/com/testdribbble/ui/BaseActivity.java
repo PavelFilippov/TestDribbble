@@ -3,8 +3,7 @@ package ru.com.testdribbble.ui;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.support.v7.app.AppCompatActivity;
-
-import com.afollestad.materialdialogs.MaterialDialog;
+import android.util.DisplayMetrics;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -22,6 +21,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     private static final String TAG = "BaseActivity";
 
     private NetworkConnectivityAware_ receiver;
+    private int screenHeight;
+    private int screenWidth;
 
     @Override
     protected void onStart() {
@@ -31,6 +32,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         receiver = new NetworkConnectivityAware_();
         registerReceiver(receiver, filter);
+
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        screenHeight = displayMetrics.heightPixels;
+        screenWidth = displayMetrics.widthPixels;
     }
 
     @Override
@@ -75,5 +81,13 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private void onError(String message) {
         onError();
+    }
+
+    public int getScreenHeight() {
+        return screenHeight;
+    }
+
+    public int getScreenWidth() {
+        return screenWidth;
     }
 }

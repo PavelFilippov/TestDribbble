@@ -2,6 +2,8 @@ package ru.com.testdribbble;
 
 import android.support.multidex.MultiDexApplication;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+
 import org.androidannotations.annotations.EApplication;
 
 import lombok.Getter;
@@ -24,6 +26,7 @@ public class TheApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         INSTANCE = this;
+        Fresco.initialize(this);
     }
 
     public AppComponent getAppComponent() {

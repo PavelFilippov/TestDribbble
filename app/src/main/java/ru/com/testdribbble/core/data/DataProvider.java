@@ -7,6 +7,7 @@ import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EBean;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import io.reactivex.disposables.Disposable;
@@ -15,6 +16,7 @@ import lombok.Getter;
 import ru.com.testdribbble.Preferences_;
 import ru.com.testdribbble.TheApplication;
 import ru.com.testdribbble.core.LocalUserProvider;
+import ru.com.testdribbble.core.data.model.Shot;
 import ru.com.testdribbble.core.data.model.Token;
 import ru.com.testdribbble.core.exception.NoNetworkException;
 import ru.com.testdribbble.core.http.NetworkModule;
@@ -44,6 +46,13 @@ public class DataProvider {
                         pref.edit().token().put(tokenResponse.getAccessToken()).apply();
                     }
                 }).compose(RxUtils.applySchedulers())
+                .subscribe(onComplete, onError);
+    }
+
+    public Disposable getShots(int page, int perPage, Consumer<List<Shot>> onComplete, Consumer<Throwable> onError) {
+        if (!hasNetwork()) return createNoNetworkSubscription(onComplete, onError);
+        return networkModule.getMainApi().getShots(page, perPage)
+                .compose(RxUtils.applySchedulers())
                 .subscribe(onComplete, onError);
     }
 

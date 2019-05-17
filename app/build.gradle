@@ -37,7 +37,8 @@ ext {
     lombokVersion = "1.16.20"
     androidAnnotationsVersion = "4.5.2"
     materialDialogVersion = "0.9.6.0"
-    picassoVersion = "2.71828"
+    smothProgressBarVersion = "1.1.0"
+    frescoVersion = "1.11.0"
     eventBusVersion = "3.1.1"
 }
 
@@ -83,8 +84,11 @@ dependencies {
     //Material Dialogs
     implementation "com.afollestad.material-dialogs:core:$materialDialogVersion"
 
-    //Picasso
-    implementation "com.squareup.picasso:picasso:$picassoVersion"
+    //Smooth Bottom Loader
+    implementation "com.github.castorflex.smoothprogressbar:library:$smothProgressBarVersion"
+
+    //Fresco
+    implementation "com.facebook.fresco:fresco:$frescoVersion"
 
     // EventBus
     implementation "org.greenrobot:eventbus:$eventBusVersion"

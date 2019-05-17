@@ -7,8 +7,17 @@
 
     <color name="colorRoseLight">#ea4c89</color>
     <color name="colorRoseLightClicked">#43EA4C89</color>
+    <color name="colorTransparentBackGround">#77444444</color>
     <color name="colorGreyLight">#E6F0F2</color>
     <color name="colorTransparent">#00ffffff</color>
     <color name="colorDeepSkyBlue">#00ACFF</color>
+
+    <!-- Bottom Progress bar colors -->
+    <integer-array name="gplus_colors">
+        <item>@color/colorPrimaryDark</item>
+        <item>@color/colorAccent</item>
+        <item>@color/colorRoseLight</item>
+        <item>@color/colorRoseLightClicked</item>
+    </integer-array>
 
 </resources>
