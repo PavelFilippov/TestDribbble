@@ -13,7 +13,7 @@ public interface ProfileFragmentContract {
 
         void setProfileInfo(User user);
 
-        void showError(Throwable throwable);
+        void showServerError(Throwable throwable);
 
     }
 

@@ -8,6 +8,8 @@ import org.androidannotations.annotations.EApplication;
 
 import java.io.File;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 import lombok.Getter;
 import lombok.Setter;
 import ru.com.testdribbble.core.dagger.AppComponent;
@@ -29,6 +31,11 @@ public class TheApplication extends MultiDexApplication {
         super.onCreate();
         INSTANCE = this;
         Fresco.initialize(this);
+        Realm.init(this);
+        RealmConfiguration config = new RealmConfiguration.Builder()
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.setDefaultConfiguration(config);
     }
 
     public AppComponent getAppComponent() {
@@ -51,7 +58,7 @@ public class TheApplication extends MultiDexApplication {
         }
     }
 
-    public static boolean deleteDir(File dir) {
+    private boolean deleteDir(File dir) {
         if (dir != null && dir.isDirectory()) {
             String[] children = dir.list();
             for (int i = 0; i < children.length; i++) {

@@ -39,7 +39,7 @@ public class ShotsAdapter extends BaseAdapter<Shot, ShotsAdapter.Holder> {
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = inflateView(R.layout.item_shot, parent);
-        ViewGroup.LayoutParams lp = (ViewGroup.LayoutParams) itemView.getLayoutParams();
+        ViewGroup.LayoutParams lp = itemView.getLayoutParams();
         lp.height = itemHeight;
         itemView.setLayoutParams(lp);
         return new Holder(itemView);
@@ -83,7 +83,7 @@ public class ShotsAdapter extends BaseAdapter<Shot, ShotsAdapter.Holder> {
 
         setupListener(holder.itemView, shot, position);
 
-        holder.txtAuthorName.setOnClickListener(v -> onViewInItemClick.onAuthorNameClick());
+        holder.txtAuthorName.setOnClickListener(v -> onViewInItemClick.onAuthorNameClick(position));
 
     }
 

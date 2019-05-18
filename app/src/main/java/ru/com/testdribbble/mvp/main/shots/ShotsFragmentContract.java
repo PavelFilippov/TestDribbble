@@ -14,11 +14,15 @@ public interface ShotsFragmentContract {
 
         void hideLoading();
 
-        void setShots(List<Shot> shots);
+        void setShots(int page, List<Shot> shots, boolean isLoadedFromDb);
 
         void setUserInfo(User user);
 
-        void showError(Throwable throwable);
+        void removeScrollListener();
+
+        void showDataBaseError(Throwable throwable);
+
+        void showServerError(Throwable throwable);
 
     }
 
@@ -28,7 +32,9 @@ public interface ShotsFragmentContract {
 
         void loadUserInfo();
 
-        void loadShots(int page);
+        void loadShots(boolean loadFromDb, int page);
+
+        void refresh();
 
         void goToProfileScreen();
 

@@ -30,7 +30,7 @@ public class ProfileFragmentPresenter implements ProfileFragmentContract.Profile
             view.setProfileInfo(user);
         }, throwable -> {
             view.hideLoading();
-            view.showError(throwable);
+            view.showServerError(throwable);
         });
     }
 

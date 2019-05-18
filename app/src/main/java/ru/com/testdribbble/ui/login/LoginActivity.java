@@ -2,10 +2,7 @@ package ru.com.testdribbble.ui.login;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -15,7 +12,6 @@ import android.support.annotation.Nullable;
 import android.support.design.button.MaterialButton;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
@@ -30,8 +26,6 @@ import org.androidannotations.annotations.App;
 import org.androidannotations.annotations.Bean;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
-
-import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -178,7 +172,7 @@ public class LoginActivity extends BaseActivity implements LoginActivityContract
 
     @Override
     public void showErrorOnGetToken(Throwable throwable) {
-        showError(throwable);
+        showServerError(throwable);
     }
 
     private class MyWebViewClient extends WebViewClient {

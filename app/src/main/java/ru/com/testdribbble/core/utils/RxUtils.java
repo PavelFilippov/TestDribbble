@@ -8,6 +8,7 @@ import java.util.concurrent.Executors;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
+import io.reactivex.SingleTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -55,9 +56,10 @@ public class RxUtils {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public static <T> ObservableTransformer<T, T> applySchedulerSingle() {
+    public static <T> SingleTransformer<T, T> applySchedulerSingle() {
         return observable -> observable
                 .subscribeOn(Schedulers.from(Executors.newSingleThreadExecutor()))
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
 }

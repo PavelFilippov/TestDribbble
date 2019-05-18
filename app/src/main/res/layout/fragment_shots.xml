@@ -38,6 +38,19 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:visibility="gone"/>
 
+            <TextView
+                android:id="@+id/txtNoShots"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textColor="@color/colorPrimaryDark"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/no_shots_at_this_time"
+                android:visibility="gone"/>
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rvShots"
                 android:layout_width="match_parent"

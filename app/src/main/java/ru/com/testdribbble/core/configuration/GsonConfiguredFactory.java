@@ -18,9 +18,10 @@ import static ru.com.testdribbble.core.configuration.ExclusionEliminationStrateg
 
 public class GsonConfiguredFactory {
 
+    private static final String TAG = "GsonConfiguredFactory";
+
     public static final String DATETIME_WITH_Z_LITERAL = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
     public static final String DATETIME_WITH_TIMEZONE = "yyyy-MM-dd'T'hh:mm:ssZ";
-    private static final String TAG = "GsonConfiguredFactory";
 
     public static Gson getGson() {
         return new GsonBuilder()
@@ -57,7 +58,6 @@ public class GsonConfiguredFactory {
 
             if (asString == null) return null;
 
-            // есть два формата даты
             try {
                 return datetimeWithTimezone.parse(asString);
             } catch (ParseException e1) {

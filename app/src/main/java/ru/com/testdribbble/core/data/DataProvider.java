@@ -12,7 +12,6 @@ import java.util.concurrent.Callable;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
-import lombok.Getter;
 import ru.com.testdribbble.Preferences_;
 import ru.com.testdribbble.TheApplication;
 import ru.com.testdribbble.core.LocalUserProvider;
@@ -23,6 +22,8 @@ import ru.com.testdribbble.core.exception.NoNetworkException;
 import ru.com.testdribbble.core.http.NetworkModule;
 import ru.com.testdribbble.core.utils.NetworkUtils;
 import ru.com.testdribbble.core.utils.RxUtils;
+
+import lombok.Getter;
 
 @EBean(scope = EBean.Scope.Singleton)
 public class DataProvider {
@@ -38,6 +39,10 @@ public class DataProvider {
     TheApplication application;
     @Bean
     LocalUserProvider userProvider;
+    @Bean
+    ShotsDb shotsDb;
+
+//HTTP methods
 
     public Disposable getToken(String clientId, String clientSecret, String code, Consumer<Token> onComplete, Consumer<Throwable> onError) {
         if (!hasNetwork()) return createNoNetworkSubscription(onComplete, onError);
@@ -63,6 +68,38 @@ public class DataProvider {
                 .compose(RxUtils.applySchedulers())
                 .subscribe(onComplete, onError);
     }
+
+//DB methods
+
+    public Disposable getShotsFromDb(Consumer<List<Shot>> onComplete, Consumer<Throwable> onError) {
+        return shotsDb.getShots()
+                .compose(RxUtils.applySchedulerSingle())
+                .subscribe(onComplete, onError);
+    }
+
+    public Disposable getShotFromDb(long id, Consumer<Shot> onComplete, Consumer<Throwable> onError) {
+        return shotsDb.getShot(id)
+                .compose(RxUtils.applySchedulerSingle())
+                .subscribe(onComplete, onError);
+    }
+
+    public Disposable updateShotsInDb(List<Shot> shots, Consumer<Throwable> onError) {
+        return shotsDb.updateShots(shots)
+                .subscribe();
+    }
+
+    public Disposable updateShotInDb(Shot shot, Consumer<Throwable> onError) {
+        return shotsDb.updateShot(shot)
+                .subscribe();
+    }
+
+    public Disposable clearShotsInDb(Consumer<Throwable> onError) {
+        return shotsDb.clearAllShots()
+                .subscribe();
+    }
+
+
+//Network methods
 
     private boolean hasNetwork() {
         return networkUtils.hasNetworkConnection();

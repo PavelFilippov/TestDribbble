@@ -4,15 +4,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.support.annotation.NonNull;
-import android.support.design.widget.AppBarLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatImageView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -25,25 +19,16 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Inject;
 
-import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 import ru.com.testdribbble.R;
 import ru.com.testdribbble.TheApplication;
-import ru.com.testdribbble.core.data.model.Shot;
 import ru.com.testdribbble.core.data.model.User;
 import ru.com.testdribbble.mvp.main.profile.ProfileFragmentContract;
 import ru.com.testdribbble.mvp.main.profile.ProfileFragmentPresenter;
-import ru.com.testdribbble.mvp.main.shots.ShotsFragmentContract;
-import ru.com.testdribbble.mvp.main.shots.ShotsFragmentPresenter;
 import ru.com.testdribbble.ui.BaseMainFragment;
-import ru.com.testdribbble.ui.adapters.ShotsAdapter;
 import ru.com.testdribbble.ui.common.BackButtonListener;
 import ru.com.testdribbble.ui.common.RouterProvider;
-import ru.com.testdribbble.ui.main.shots.IOnViewInItemClick;
 import ru.com.testdribbble.views.ProfileImageProgressBar;
 import ru.terrakok.cicerone.Router;
 
@@ -157,8 +142,8 @@ public class ProfileFragment extends BaseMainFragment implements
     }
 
     @Override
-    public void showError(Throwable throwable) {
-        getMainActivity().showError(throwable);
+    public void showServerError(Throwable throwable) {
+        getMainActivity().showServerError(throwable);
     }
 
     @Override

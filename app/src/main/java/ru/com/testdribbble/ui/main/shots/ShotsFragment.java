@@ -1,9 +1,6 @@
 package ru.com.testdribbble.ui.main.shots;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,8 +12,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.ProgressBar;
@@ -31,9 +26,7 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -50,14 +43,13 @@ import ru.com.testdribbble.ui.BaseMainFragment;
 import ru.com.testdribbble.ui.adapters.ShotsAdapter;
 import ru.com.testdribbble.ui.common.BackButtonListener;
 import ru.com.testdribbble.ui.common.RouterProvider;
-import ru.com.testdribbble.ui.login.LoginActivity_;
 import ru.terrakok.cicerone.Router;
 
 @EFragment(R.layout.fragment_shots)
 public class ShotsFragment extends BaseMainFragment implements
         ShotsFragmentContract.ShotsFragmentView,
         BackButtonListener,
-        IOnViewInItemClick{
+        IOnViewInItemClick {
 
     private static final String TAG = "ShotsFragment";
 
@@ -86,6 +78,9 @@ public class ShotsFragment extends BaseMainFragment implements
     RecyclerView rvShots;
 
     @ViewById
+    TextView txtNoShots;
+
+    @ViewById
     SmoothProgressBar progressBottom;
 
 //Set app navigation injections and it's management
@@ -110,10 +105,13 @@ public class ShotsFragment extends BaseMainFragment implements
 
     private boolean isLoadingData;
     private ShotsAdapter adapter;
+    int ablHeaderHeight;
+    int lastVisibleElement;
 
-    private int page;
+    private int page = -1;
 
     private MaterialDialog logoutDialog;
+    private MaterialDialog noShotsDialog;
 
     private long mLastClickTime = 0;
 
@@ -136,16 +134,23 @@ public class ShotsFragment extends BaseMainFragment implements
             presenter.setRouter(router);
         }
 
+        onViewInItemClick = this;
+
         imgLeftButton.setImageDrawable(getResources().getDrawable(R.drawable.log_out));
         txtHeader.setText(getString(R.string.app_name));
 
-        onViewInItemClick = this;
-        presenter.loadUserInfo();
+        if(ablHeaderHeight > 0) {
+            setAdapterViews(ablHeaderHeight);
+            setRefresh();
+        } else {
+            setListItemHeight();
+        }
     }
 
     @Override
     public void showLoading() {
         isLoadingData = true;
+        if (txtNoShots != null) txtNoShots.setVisibility(View.GONE);
         Handler handler = new Handler();
         handler.postDelayed(() -> {
             if (isLoadingData) {
@@ -176,15 +181,23 @@ public class ShotsFragment extends BaseMainFragment implements
     }
 
     @Override
-    public void setShots(List<Shot> shots) {
-        List<Shot> selectedShots = new ArrayList<>(shots);
-        for (Shot shot : shots) {
-            if (shot.isAnimated()) {
-                selectedShots.remove(shot);
+    public void setShots(int page, List<Shot> shots, boolean isLoadedFromDb) {
+        this.page = page;
+        if (isLoadedFromDb) {
+            removeScrollListener();
+            adapter.addData(shots);
+        } else if (shots.isEmpty() && adapter.getItemCount() != 0) {
+            removeScrollListener();
+        } else {
+            if (shots.isEmpty() && adapter.getItemCount() == 0) {
+                removeScrollListener();
+                if (txtNoShots != null) txtNoShots.setVisibility(View.VISIBLE);
+                showNoShotsDialog();
+            } else {
+                adapter.addData(shots);
+                this.page++;
             }
         }
-        adapter.addData(selectedShots);
-        page++;
     }
 
     @Override
@@ -194,13 +207,24 @@ public class ShotsFragment extends BaseMainFragment implements
     }
 
     @Override
-    public void showError(Throwable throwable) {
-        getMainActivity().showError(throwable);
+    public void showServerError(Throwable throwable) {
+        getMainActivity().showServerError(throwable);
     }
 
     @Override
-    public void onAuthorNameClick() {
+    public void showDataBaseError(Throwable throwable) {
+        getMainActivity().showDbError(throwable);
+    }
+
+    @Override
+    public void onAuthorNameClick(int itemPosition) {
+        lastVisibleElement = itemPosition;
         presenter.goToProfileScreen();
+    }
+
+    @Override
+    public void removeScrollListener() {
+        rvShots.clearOnScrollListeners();
     }
 
     @Override
@@ -222,38 +246,40 @@ public class ShotsFragment extends BaseMainFragment implements
 
 //Internal methods
 
-    private void setListViews() {
+    private void setListItemHeight() {
         ablHeader.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 ablHeader.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                int ablHeaderHeight = ablHeader.getHeight();
-                setAdapterViews(ablHeaderHeight);
-                setRefresh();
-                loadShots();
+                ablHeaderHeight = ablHeader.getHeight();
+                presenter.loadUserInfo();
             }
         });
     }
 
+    private void setListViews() {
+        setAdapterViews(ablHeaderHeight);
+        setRefresh();
+        loadShots(true);
+    }
+
     private void setAdapterViews(int height) {
-        adapter = new ShotsAdapter(
-                getMainActivity(),
-                (getMainActivity().getScreenHeight() - (height* 3 / 2)) / 2,
-                user != null ? user.getName() : "",
-                onViewInItemClick);
+        if (adapter == null) {
+            adapter = new ShotsAdapter(
+                    getMainActivity(),
+                    (getMainActivity().getScreenHeight() - (height * 3 / 2)) / 2,
+                    user != null ? user.getName() : "",
+                    onViewInItemClick);
+        }
 
         rvShots.setLayoutManager(new LinearLayoutManager(getMainActivity()));
         rvShots.setAdapter(adapter);
 
-        rvShots.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if (!isLoadingData) {
-                    loadShots();
-                }
-            }
-        });
+        if (adapter != null && rvShots.getLayoutManager() != null) {
+            rvShots.getLayoutManager().scrollToPosition(lastVisibleElement);
+        }
+
+        setScrollListener();
 
         adapter.setRecyclerTouchListener((model, position) -> {
             if (isDoubleClick(mLastClickTime)) {
@@ -261,6 +287,18 @@ public class ShotsFragment extends BaseMainFragment implements
             }
             mLastClickTime = SystemClock.elapsedRealtime();
 
+        });
+    }
+
+    private void setScrollListener() {
+        rvShots.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (!isLoadingData) {
+                    loadShots(false);
+                }
+            }
         });
     }
 
@@ -275,7 +313,9 @@ public class ShotsFragment extends BaseMainFragment implements
                         srlRefresh.setRefreshing(false);
                         page = 1;
                         adapter.clear();
-                        loadShots();
+                        presenter.refresh();
+                        setScrollListener();
+                        loadShots(false);
                     }
                 }
             }, 500);
@@ -303,7 +343,29 @@ public class ShotsFragment extends BaseMainFragment implements
         });
     }
 
-    private void loadShots() {
-        presenter.loadShots(page);
+    private void showNoShotsDialog() {
+        noShotsDialog = new MaterialDialog.Builder(getMainActivity())
+                .customView(R.layout.dialog_question_yes_no, false)
+                .build();
+        TextView txtQuestion = (TextView) noShotsDialog.findViewById(R.id.txtQuestion);
+        MaterialButton btnCancel = (MaterialButton) noShotsDialog.findViewById(R.id.btnNo);
+        MaterialButton btnUpload = (MaterialButton) noShotsDialog.findViewById(R.id.btnYes);
+
+        txtQuestion.setText(getString(R.string.you_have_no_nonanimated_shots_on_your_account));
+        btnCancel.setText(getString(R.string.cancel));
+        btnUpload.setText(getString(R.string.upload));
+
+        noShotsDialog.show();
+
+        btnCancel.setOnClickListener(v -> noShotsDialog.dismiss());
+        btnUpload.setOnClickListener(v -> {
+            noShotsDialog.dismiss();
+            this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.DRIBBBLE_ADD_SHOTS_URL)));
+        });
     }
+
+    private void loadShots(boolean loadFromDb) {
+        presenter.loadShots(loadFromDb, page);
+    }
+
 }

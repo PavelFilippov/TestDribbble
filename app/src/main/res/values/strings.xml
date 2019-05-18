@@ -3,6 +3,7 @@
 
     <string name="error">Error</string>
     <string name="server_error">Server Error</string>
+    <string name="database_error">Database Error</string>
     <string name="network_connection_established">Network connection established</string>
     <string name="network_connection_lost">Network connection lost</string>
 
@@ -12,6 +13,10 @@
     <string name="sign_in">Sign in</string>
 
     <!-- Shots Screen -->
+    <string name="no_shots_at_this_time">No shots at this time</string>
+    <string name="you_have_no_nonanimated_shots_on_your_account">You have no NONanimated shots on your account. Please upload some NONanimated shots to see them in shots list.</string>
+    <string name="upload">Upload</string>
+    <string name="cancel">Cancel</string>
     <string name="are_you_sure_you_want_to_log_out">Are you sure you want to Log out?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>

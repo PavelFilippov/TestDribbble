@@ -58,29 +58,28 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public void showError(Throwable throwable) {
+    public void showServerError(Throwable throwable) {
         if (throwable instanceof PlatformHttpException) {
-            showError();
-            return;
+            onServerErrorError();
         } else if (throwable instanceof NoNetworkException) {
             EventBus.getDefault().post(new NetworkData(false));
-            return;
+        } else {
+            onServerErrorError();
         }
     }
 
-    public void showError() {
-        onError();
-    }
-
-    private void onError() {
-        Crouton.makeText(this, getString(R.string.server_error), new Style.Builder()
+    public void showDbError(Throwable throwable) {
+        Crouton.makeText(this, getString(R.string.database_error), new Style.Builder()
                 .setBackgroundColorValue(getResources().getColor(R.color.colorRoseLight))
                 .build())
                 .show();
     }
 
-    private void onError(String message) {
-        onError();
+    private void onServerErrorError() {
+        Crouton.makeText(this, getString(R.string.server_error), new Style.Builder()
+                .setBackgroundColorValue(getResources().getColor(R.color.colorRoseLight))
+                .build())
+                .show();
     }
 
     public int getScreenHeight() {

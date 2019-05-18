@@ -21,6 +21,8 @@ public class Constants {
 
     public static final String DRIBBBLE_SIGN_IN_URL = "https://dribbble.com/oauth/authorize?client_id=";
 
+    public static final String DRIBBBLE_ADD_SHOTS_URL = "https://dribbble.com/shots/new";
+
     public static final String REDIRECT_URL = "https://example.com/?code=";
 
     public static final String TOKEN_URL = "https://dribbble.com/oauth/";

@@ -22,7 +22,6 @@ public abstract class BaseAdapter<T, V extends BaseViewHolder> extends RecyclerV
     @Setter
     @Getter
     private IRecyclerTouchListener<T> recyclerTouchListener;
-    private Object data;
     @Setter
     private IReadyListener readyListener;
 
