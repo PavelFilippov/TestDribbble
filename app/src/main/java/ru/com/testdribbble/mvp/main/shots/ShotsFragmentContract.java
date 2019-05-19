@@ -5,14 +5,11 @@ import java.util.List;
 import ru.com.testdribbble.core.data.model.Shot;
 import ru.com.testdribbble.core.data.model.User;
 import ru.com.testdribbble.mvp.BasePresenter;
+import ru.com.testdribbble.mvp.BaseView;
 
 public interface ShotsFragmentContract {
 
-    interface ShotsFragmentView {
-
-        void showLoading();
-
-        void hideLoading();
+    interface ShotsFragmentView extends BaseView {
 
         void setShots(int page, List<Shot> shots, boolean isLoadedFromDb);
 
@@ -21,8 +18,6 @@ public interface ShotsFragmentContract {
         void removeScrollListener();
 
         void showDataBaseError(Throwable throwable);
-
-        void showServerError(Throwable throwable);
 
     }
 

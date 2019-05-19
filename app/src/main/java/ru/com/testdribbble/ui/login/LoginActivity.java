@@ -171,7 +171,7 @@ public class LoginActivity extends BaseActivity implements LoginActivityContract
     }
 
     @Override
-    public void showErrorOnGetToken(Throwable throwable) {
+    public void showServerError(Throwable throwable) {
         showServerError(throwable);
     }
 

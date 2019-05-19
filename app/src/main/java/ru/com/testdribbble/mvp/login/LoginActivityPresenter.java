@@ -43,7 +43,7 @@ public class LoginActivityPresenter implements LoginActivityContract.LoginActivi
             if (!TextUtils.isEmpty(token.getAccessToken())) goToNextScreen();
         }, throwable -> {
             view.hideLoading();
-            view.showErrorOnGetToken(throwable);
+            view.showServerError(throwable);
         });
     }
 

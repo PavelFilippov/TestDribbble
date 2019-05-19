@@ -1,16 +1,11 @@
 package ru.com.testdribbble.mvp.login;
 
 import ru.com.testdribbble.mvp.BasePresenter;
+import ru.com.testdribbble.mvp.BaseView;
 
 public interface LoginActivityContract {
 
-    interface LoginActivityView {
-
-        void showLoading();
-
-        void hideLoading();
-
-        void showErrorOnGetToken(Throwable throwable);
+    interface LoginActivityView extends BaseView {
 
     }
 
