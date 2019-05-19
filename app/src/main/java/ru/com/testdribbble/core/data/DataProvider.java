@@ -85,16 +85,19 @@ public class DataProvider {
 
     public Disposable updateShotsInDb(List<Shot> shots, Consumer<Throwable> onError) {
         return shotsDb.updateShots(shots)
+                .doOnError(onError)
                 .subscribe();
     }
 
     public Disposable updateShotInDb(Shot shot, Consumer<Throwable> onError) {
         return shotsDb.updateShot(shot)
+                .doOnError(onError)
                 .subscribe();
     }
 
     public Disposable clearShotsInDb(Consumer<Throwable> onError) {
         return shotsDb.clearAllShots()
+                .doOnError(onError)
                 .subscribe();
     }
 
